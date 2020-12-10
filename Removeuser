@@ -1,0 +1,15 @@
+Script to remove user from all Sharpoint Site, folder, docs.
+
+$SiteURLs = Get-SPOSite
+    foreach($SiteURL in $SiteURLs)
+    {
+Remove-SPOUser -Site $SiteURL -LoginName "user@domain.com"
+    }
+
+In order to perform above steps you need to be the owner of SharePoint site. below is the script to give ownership on all sites.
+
+$SiteURLs = Get-SPOSite
+    foreach($SiteURL in $SiteURLs)
+    {
+Set-SPOSite -Identity $SiteURL -Owner user@domain.com -NoWait
+    }
