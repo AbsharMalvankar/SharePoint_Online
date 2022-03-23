@@ -25,7 +25,7 @@ foreach ($U in $UPN){
 Add-PnPGroupMember -LoginName $U.UserPrincipalName -Identity $Group
 Write-Host $U.UserPrincipalName "added successfull in Group" $Group -BackgroundColor Green
 }
-Write-Host "****Script by Abshar****"-BackgroundColor Green
+Write-Host "****Script created by Abshar****"-BackgroundColor Green
 }
 catch{
  Write-Host "Error!!!!" -BackgroundColor Red    
