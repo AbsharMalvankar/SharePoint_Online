@@ -28,5 +28,5 @@ Write-Host $U.UserPrincipalName "added successfull in Group" $Group -BackgroundC
 Write-Host "****Script created by Abshar****"-BackgroundColor Green
 }
 catch{
- Write-Host "Error!!!!" -BackgroundColor Red    
+ Write-Host "Error Detail: `n$($_.Exception.Message)" -ForegroundColor Red    
 }
