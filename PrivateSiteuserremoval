@@ -1,0 +1,14 @@
+#Connection
+Connect-MicrosoftTeams
+Connect-SPOService -Url
+
+#PROPERTY NEEDS TO BE FILLED
+#Private Site Url
+$Privatesiteurl = "https://xxxx.sharepoint.com/sites/Teamsite2-Private"
+$Privatechannelname = "Display Name of the Private channel"
+$users = Get-Content -Path "C:\Users\xxx\Desktop\Users.txt"
+
+#EXECUTION
+$id = Get-sposite -Identity $Privatesiteurl | Select -ExpandProperty RelatedGroupID;foreach($u in $users){Try{Remove-TeamChannelUser -GroupId $id -DisplayName $Privatechannelname -User $u
+Write-Host "User $u removed from Private site - $privatechannelname" -BackgroundColor Green}Catch{
+write-host "User $u `nError Detail: `n$($_.Exception.Message)" -ForegroundColor Red}}
