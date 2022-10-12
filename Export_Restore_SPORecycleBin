@@ -1,0 +1,14 @@
+#Parameter
+$SiteURL= "https://malvankar.sharepoint.com/sites/Teamsite4"
+$DirPath = "sites/Teamsite4/Shared Documents"
+$DeletedByUserEmail = "Guru@xxx.tk"
+$DeletedDate = Get-Date("12-10-2022") -Format "dd-MMMM-yyyy" #Day/Month/Year
+
+#Connect to PnP Online
+Connect-PnPOnline -Url $SiteURL
+
+#Export
+Get-PnPRecycleBinItem -FirstStage -RowLimit 500000 | ?{ $_.DirName -like "$DirPath*" -and $_.DeletedByEmail -eq $DeletedByUserEmail -and  ($_.DeletedDate).Date -eq $DeletedDate } | Select AuthorName, AuthorEmail,DeletedByName, DeletedByEmail,@{Name="DeletedDate";Expression={$_.DeletedDate.ToString("dd-MM-yyyy")}},Title, DirName,ItemType,Size | Export-Csv -Path "E:\RESTORE\abc.csv" -NoTypeInformation
+
+#Restore
+Get-PnPRecycleBinItem -FirstStage -RowLimit 500000 | ?{ $_.DirName -like "$DirPath*" -and $_.DeletedByEmail -eq $DeletedByUserEmail -and ($_.DeletedDate).Date -eq $DeletedDate } | Restore-PnpRecycleBinItem -Force
